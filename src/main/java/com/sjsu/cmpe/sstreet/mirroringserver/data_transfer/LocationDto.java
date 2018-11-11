@@ -1,6 +1,5 @@
 package com.sjsu.cmpe.sstreet.mirroringserver.data_transfer;
 
-import javax.persistence.*;
 
 public class LocationDto {
 

@@ -1,6 +1,5 @@
 package com.sjsu.cmpe.sstreet.mirroringserver.data_transfer;
 
-import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
