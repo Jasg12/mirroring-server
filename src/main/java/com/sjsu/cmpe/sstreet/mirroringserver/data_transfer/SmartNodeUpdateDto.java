@@ -1,13 +1,12 @@
 package com.sjsu.cmpe.sstreet.mirroringserver.data_transfer;
 
-import com.sjsu.cmpe.sstreet.mirroringserver.model.SmartCluster;
-
 import java.util.Date;
 import java.util.Set;
 
-public class SmartClusterDto {
 
-    private Integer idSmartCluster;
+public class SmartNodeUpdateDto {
+
+    private Integer idSmartNode;
 
     private String name;
 
@@ -19,14 +18,17 @@ public class SmartClusterDto {
 
     private LocationDto location;
 
-    private Set<SmartNodeDto> smartNodeSet;
+    private Set<SensorDto> sensorSet;
 
-    public SmartClusterDto(
+    private SmartClusterDto smartCluster;
+
+    public SmartNodeUpdateDto(
         String name,
         String model,
         String make,
         Date installationDate,
-        LocationDto location
+        LocationDto location,
+        SmartClusterDto smartCluster
     ) {
 
         this.name = name;
@@ -34,20 +36,21 @@ public class SmartClusterDto {
         this.make = make;
         this.installationDate = installationDate;
         this.location = location;
+        this.smartCluster = smartCluster;
     }
 
-    public SmartClusterDto() {
+    public SmartNodeUpdateDto() {
 
     }
 
-    public Integer getIdSmartCluster() {
+    public Integer getIdSmartNode() {
 
-        return idSmartCluster;
+        return idSmartNode;
     }
 
-    public void setIdSmartCluster(Integer idSmartCluster) {
+    public void setIdSmartNode(Integer idSmartNode) {
 
-        this.idSmartCluster = idSmartCluster;
+        this.idSmartNode = idSmartNode;
     }
 
     public String getName() {
@@ -100,14 +103,23 @@ public class SmartClusterDto {
         this.location = location;
     }
 
-    public Set<SmartNodeDto> getSmartNodeSet() {
+    public Set<SensorDto> getSensorSet() {
 
-        return smartNodeSet;
+        return sensorSet;
     }
 
-    public void setSmartNodeSet(Set<SmartNodeDto> smartNodeSet) {
+    public void setSensorSet(Set<SensorDto> sensorSet) {
 
-        this.smartNodeSet = smartNodeSet;
+        this.sensorSet = sensorSet;
     }
 
+    public SmartClusterDto getSmartCluster() {
+
+        return smartCluster;
+    }
+
+    public void setSmartCluster(SmartClusterDto smartCluster) {
+
+        this.smartCluster = smartCluster;
+    }
 }
