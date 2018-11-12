@@ -8,35 +8,15 @@ public class SmartNodeUpdateDto {
 
     private Integer idSmartNode;
 
-    private String name;
-
-    private String model;
-
-    private String make;
-
-    private Date installationDate;
-
     private LocationDto location;
 
     private Set<SensorDto> sensorSet;
 
-    private SmartClusterDto smartCluster;
-
     public SmartNodeUpdateDto(
-        String name,
-        String model,
-        String make,
-        Date installationDate,
-        LocationDto location,
-        SmartClusterDto smartCluster
+        LocationDto location
     ) {
 
-        this.name = name;
-        this.model = model;
-        this.make = make;
-        this.installationDate = installationDate;
         this.location = location;
-        this.smartCluster = smartCluster;
     }
 
     public SmartNodeUpdateDto() {
@@ -51,46 +31,6 @@ public class SmartNodeUpdateDto {
     public void setIdSmartNode(Integer idSmartNode) {
 
         this.idSmartNode = idSmartNode;
-    }
-
-    public String getName() {
-
-        return name;
-    }
-
-    public void setName(String name) {
-
-        this.name = name;
-    }
-
-    public String getModel() {
-
-        return model;
-    }
-
-    public void setModel(String model) {
-
-        this.model = model;
-    }
-
-    public String getMake() {
-
-        return make;
-    }
-
-    public void setMake(String make) {
-
-        this.make = make;
-    }
-
-    public Date getInstallationDate() {
-
-        return installationDate;
-    }
-
-    public void setInstallationDate(Date installationDate) {
-
-        this.installationDate = installationDate;
     }
 
     public LocationDto getLocation() {
@@ -113,13 +53,4 @@ public class SmartNodeUpdateDto {
         this.sensorSet = sensorSet;
     }
 
-    public SmartClusterDto getSmartCluster() {
-
-        return smartCluster;
-    }
-
-    public void setSmartCluster(SmartClusterDto smartCluster) {
-
-        this.smartCluster = smartCluster;
-    }
 }

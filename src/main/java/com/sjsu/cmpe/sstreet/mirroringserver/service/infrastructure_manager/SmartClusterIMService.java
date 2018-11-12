@@ -1,11 +1,11 @@
 package com.sjsu.cmpe.sstreet.mirroringserver.service.infrastructure_manager;
 
 
+import com.sjsu.cmpe.sstreet.mirroringserver.data_transfer.LocationDto;
 import com.sjsu.cmpe.sstreet.mirroringserver.data_transfer.SmartClusterDto;
 import com.sjsu.cmpe.sstreet.mirroringserver.data_transfer.SmartClusterUpdateDto;
 import com.sjsu.cmpe.sstreet.mirroringserver.model.Location;
 import com.sjsu.cmpe.sstreet.mirroringserver.model.SmartCluster;
-import com.sjsu.cmpe.sstreet.mirroringserver.repository.mysql.LocationRepository;
 import com.sjsu.cmpe.sstreet.mirroringserver.repository.mysql.SmartClusterRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class SmartClusterService {
+public class SmartClusterIMService {
 
     private SmartClusterRepository smartClusterRepository;
 
@@ -27,7 +27,7 @@ public class SmartClusterService {
 
 
     @Autowired
-    public SmartClusterService(SmartClusterRepository smartClusterRepository) {
+    public SmartClusterIMService(SmartClusterRepository smartClusterRepository) {
         this.smartClusterRepository = smartClusterRepository;
         this.modelMapper = new ModelMapper();
     }
@@ -67,7 +67,7 @@ public class SmartClusterService {
                 return ResponseEntity.ok("Smart Cluster updated");
 
             }else{
-                return new ResponseEntity<>("Smart Cluster Updation Failed",HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<>("Smart Cluster Update Failed",HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
         }else{
@@ -81,10 +81,10 @@ public class SmartClusterService {
         Iterable<SmartCluster> smartClusterIterable = smartClusterRepository.findAll();
         List<SmartClusterDto> smartClusterList  = new ArrayList<>();
 
-        smartClusterIterable.forEach(smartCluster -> {
-            smartClusterList.add(modelMapper.map(smartCluster, SmartClusterDto.class));
+        smartClusterIterable.forEach(smartCluster ->
+            smartClusterList.add(modelMapper.map(smartCluster, SmartClusterDto.class))
 
-        });
+        );
 
         return smartClusterList;
     }
@@ -93,6 +93,11 @@ public class SmartClusterService {
 
         Optional<SmartCluster> smartClusterOptional = smartClusterRepository.findById(id);
         List<SmartClusterDto> smartClusterDto = new ArrayList<>();
+
+        if(!smartClusterOptional.isPresent()) {
+
+            return null;
+        }
 
         smartClusterOptional.ifPresent(smartCluster ->
             smartClusterDto.add(modelMapper.map(smartCluster,SmartClusterDto.class))
@@ -108,6 +113,11 @@ public class SmartClusterService {
         Optional<SmartCluster> smartClusterOptional = smartClusterRepository.findByName(Name);
         List<SmartClusterDto> smartClusterDto = new ArrayList<>();
 
+        if(!smartClusterOptional.isPresent()) {
+
+            return null;
+        }
+
         smartClusterOptional.ifPresent(smartCluster ->
                 smartClusterDto.add(modelMapper.map(smartCluster,SmartClusterDto.class))
 
@@ -117,12 +127,12 @@ public class SmartClusterService {
 
     }
 
-    public SmartClusterDto getSmartClusterByLocation(Location location){
+    public SmartClusterDto getSmartClusterByLocation(LocationDto locationDto){
 
+        Location location = modelMapper.map(locationDto, Location.class);
         SmartCluster smartCluster = smartClusterRepository.findByLocation(location);
-        SmartClusterDto smartClusterDto = modelMapper.map(smartCluster, SmartClusterDto.class);
 
-        return smartClusterDto;
+        return modelMapper.map(smartCluster, SmartClusterDto.class);
 
 
     }
