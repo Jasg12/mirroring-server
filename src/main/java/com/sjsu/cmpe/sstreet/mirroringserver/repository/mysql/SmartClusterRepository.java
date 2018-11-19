@@ -4,7 +4,6 @@ import com.sjsu.cmpe.sstreet.mirroringserver.model.Location;
 import com.sjsu.cmpe.sstreet.mirroringserver.model.SmartCluster;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface SmartClusterRepository extends CrudRepository<SmartCluster, Integer> {
