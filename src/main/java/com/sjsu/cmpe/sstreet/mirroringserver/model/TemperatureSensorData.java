@@ -3,7 +3,7 @@ package com.sjsu.cmpe.sstreet.mirroringserver.model;
 import org.springframework.data.cassandra.core.mapping.Table;
 
 @Table(value = "sensor_temperature_data")
-public class TemperatureSensorData extends com.sjsu.cmpe.sstreet.webserver.model.SensorData {
+public class TemperatureSensorData extends com.sjsu.cmpe.sstreet.mirroringserver.model.SensorData {
 
     private Integer temperature;
 
