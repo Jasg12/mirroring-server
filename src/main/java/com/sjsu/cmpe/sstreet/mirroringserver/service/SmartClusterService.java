@@ -1,4 +1,4 @@
-package com.sjsu.cmpe.sstreet.mirroringserver.service.infrastructure_manager;
+package com.sjsu.cmpe.sstreet.mirroringserver.service;
 
 
 import com.sjsu.cmpe.sstreet.mirroringserver.data_transfer.LocationDto;
@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class SmartClusterIMService {
+public class SmartClusterService {
 
     private SmartClusterRepository smartClusterRepository;
 
@@ -27,7 +27,7 @@ public class SmartClusterIMService {
 
 
     @Autowired
-    public SmartClusterIMService(SmartClusterRepository smartClusterRepository) {
+    public SmartClusterService(SmartClusterRepository smartClusterRepository) {
         this.smartClusterRepository = smartClusterRepository;
         this.modelMapper = new ModelMapper();
     }
