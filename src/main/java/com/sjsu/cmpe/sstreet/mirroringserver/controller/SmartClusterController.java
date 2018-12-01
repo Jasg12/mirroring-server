@@ -1,8 +1,8 @@
 package com.sjsu.cmpe.sstreet.mirroringserver.controller;
 
-import com.sjsu.cmpe.sstreet.mirroringserver.data_transfer.LocationDto;
-import com.sjsu.cmpe.sstreet.mirroringserver.data_transfer.SmartClusterDto;
-import com.sjsu.cmpe.sstreet.mirroringserver.data_transfer.SmartClusterUpdateDto;
+import com.sjsu.cmpe.sstreet.mirroringserver.model.Location;
+import com.sjsu.cmpe.sstreet.mirroringserver.model.SmartCluster;
+import com.sjsu.cmpe.sstreet.mirroringserver.model.SmartCluster;
 import com.sjsu.cmpe.sstreet.mirroringserver.service.SmartClusterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,37 +23,37 @@ public class SmartClusterController {
 
 
     @RequestMapping(method = RequestMethod.POST, value = "/create")
-    public @ResponseBody ResponseEntity<String> createSmartCluster(@RequestBody SmartClusterDto smartClusterDto){
+    public @ResponseBody ResponseEntity<String> createSmartCluster(@RequestBody SmartCluster smartCluster){
 
-        return smartClusterService.createSmartCluster(smartClusterDto);
+        return smartClusterService.createSmartCluster(smartCluster);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/update")
-    public @ResponseBody ResponseEntity<String> updateSmartCluster(@RequestBody SmartClusterUpdateDto smartClusterUpdateDto){
+    public @ResponseBody ResponseEntity<String> updateSmartCluster(@RequestBody SmartCluster smartCluster){
 
-        return smartClusterService.updateSmartCluster(smartClusterUpdateDto);
+        return smartClusterService.updateSmartCluster(smartCluster);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/get/all")
-    public @ResponseBody List<SmartClusterDto> getAllSmartCluster(){
+    public @ResponseBody List<SmartCluster> getAllSmartCluster(){
 
         return smartClusterService.getAllSmartClusters();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/get/byId/{idSmartCluster}")
-    public @ResponseBody SmartClusterDto getSmartClusterById(@PathVariable(value = "idSmartCluster") Integer idSmartCluster){
+    public @ResponseBody SmartCluster getSmartClusterById(@PathVariable(value = "idSmartCluster") Integer idSmartCluster){
 
         return smartClusterService.getSmartClusterById(idSmartCluster);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/get/byLocation")
-    public @ResponseBody SmartClusterDto getSmartClusterByLocation(@RequestBody LocationDto locationDto){
+    public @ResponseBody SmartCluster getSmartClusterByLocation(@RequestBody Location location){
 
-        return smartClusterService.getSmartClusterByLocation(locationDto);
+        return smartClusterService.getSmartClusterByLocation(location);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/get/byName/{name}")
-    public @ResponseBody SmartClusterDto getSmartClusterByName(@PathVariable(value = "name") String name){
+    public @ResponseBody SmartCluster getSmartClusterByName(@PathVariable(value = "name") String name){
 
         return smartClusterService.getSmartClusterByName(name);
     }

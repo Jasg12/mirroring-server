@@ -2,7 +2,6 @@ package com.sjsu.cmpe.sstreet.mirroringserver.model;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
 
 @Entity
 @Table(name = "smart_node")
@@ -20,12 +19,9 @@ public class SmartNode {
 
     private Date installationDate;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="location_idlocation", unique= true, nullable=true, insertable=true, updatable=true)
     private Location location;
-
-    @OneToMany(mappedBy = "smartNode", cascade = CascadeType.ALL)
-    private Set<Sensor> sensorSet;
 
     @ManyToOne
     @JoinColumn(name = "smart_cluster_idSmartCluster")
@@ -46,6 +42,15 @@ public class SmartNode {
         this.installationDate = installationDate;
         this.location = location;
         this.smartCluster = smartCluster;
+    }
+
+    public SmartNode(String name, String model, String make, Date installationDate, Location location) {
+
+        this.name = name;
+        this.model = model;
+        this.make = make;
+        this.installationDate = installationDate;
+        this.location = location;
     }
 
     public SmartNode() {
@@ -110,16 +115,6 @@ public class SmartNode {
     public void setLocation(Location location) {
 
         this.location = location;
-    }
-
-    public Set<Sensor> getSensorSet() {
-
-        return sensorSet;
-    }
-
-    public void setSensorSet(Set<Sensor> sensorSet) {
-
-        this.sensorSet = sensorSet;
     }
 
     public SmartCluster getSmartCluster() {

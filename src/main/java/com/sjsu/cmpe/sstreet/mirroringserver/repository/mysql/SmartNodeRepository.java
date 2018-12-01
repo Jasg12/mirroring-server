@@ -1,6 +1,6 @@
 package com.sjsu.cmpe.sstreet.mirroringserver.repository.mysql;
 
-import com.sjsu.cmpe.sstreet.mirroringserver.data_transfer.LocationDto;
+import com.sjsu.cmpe.sstreet.mirroringserver.model.Location;
 import com.sjsu.cmpe.sstreet.mirroringserver.model.Location;
 import com.sjsu.cmpe.sstreet.mirroringserver.model.SmartCluster;
 import com.sjsu.cmpe.sstreet.mirroringserver.model.SmartNode;

@@ -1,10 +1,6 @@
 package com.sjsu.cmpe.sstreet.mirroringserver.service;
 
 
-import com.sjsu.cmpe.sstreet.mirroringserver.data_transfer.LocationDto;
-import com.sjsu.cmpe.sstreet.mirroringserver.data_transfer.SmartClusterDto;
-import com.sjsu.cmpe.sstreet.mirroringserver.data_transfer.SmartNodeDto;
-import com.sjsu.cmpe.sstreet.mirroringserver.data_transfer.SmartNodeUpdateDto;
 import com.sjsu.cmpe.sstreet.mirroringserver.model.Location;
 import com.sjsu.cmpe.sstreet.mirroringserver.model.SmartCluster;
 import com.sjsu.cmpe.sstreet.mirroringserver.model.SmartNode;
@@ -34,9 +30,9 @@ public class SmartNodeService {
         this.modelMapper = new ModelMapper();
     }
 
-    public ResponseEntity<String> createSmartNode(SmartNodeDto smartNodeDto) {
+    public ResponseEntity<String> createSmartNode(SmartNode smartNode) {
 
-        SmartNode smartNode = modelMapper.map(smartNodeDto, SmartNode.class);
+
         SmartNode savedSmartNode = smartNodeRepository.save(smartNode);
 
         if(null != savedSmartNode){
@@ -49,9 +45,9 @@ public class SmartNodeService {
 
     }
 
-    public ResponseEntity<String> updateSmartNode(SmartNodeUpdateDto smartNodeUpdateDto){
+    public ResponseEntity<String> updateSmartNode(SmartNode smartNode){
 
-        SmartNode smartNode = modelMapper.map(smartNodeUpdateDto, SmartNode.class);
+
 
         Optional<SmartNode> smartNodeResult = smartNodeRepository.findById(smartNode.getIdSmartNode());
 
@@ -70,7 +66,7 @@ public class SmartNodeService {
                 return ResponseEntity.ok("Smart Node updated");
 
             }else{
-                return new ResponseEntity<>("Smart Node Update Failed",HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<>("Smart Node  Failed",HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
         }else{
@@ -79,42 +75,38 @@ public class SmartNodeService {
 
     }
 
-    public List<SmartNodeDto> getAllSmartNodes(){
+    public List<SmartNode> getAllSmartNodes(){
 
         Iterable<SmartNode> smartNodeIterable = smartNodeRepository.findAll();
-        List<SmartNodeDto> smartNodeList  = new ArrayList<>();
+        List<SmartNode> smartNodeList  = new ArrayList<>();
 
         smartNodeIterable.forEach(smartNode ->
-            smartNodeList.add(modelMapper.map(smartNode, SmartNodeDto.class))
+            smartNodeList.add(modelMapper.map(smartNode, SmartNode.class))
 
         );
 
         return smartNodeList;
     }
 
-    public SmartNodeDto getSmartNodeById(Integer id){
+    public SmartNode getSmartNodeById(Integer id){
 
         Optional<SmartNode> smartNodeOptional = smartNodeRepository.findById(id);
-        List<SmartNodeDto> smartNodeDto = new ArrayList<>();
+        List<SmartNode> smartNode = new ArrayList<>();
 
         if(!smartNodeOptional.isPresent()) {
 
             return null;
         }
 
-        smartNodeOptional.ifPresent(smartNode ->
-            smartNodeDto.add(modelMapper.map(smartNode,SmartNodeDto.class))
 
-        );
-
-        return smartNodeDto.get(0);
+        return smartNode.get(0);
 
     }
 
-    public SmartNodeDto getSmartNodeByName(String name){
+    public SmartNode getSmartNodeByName(String name){
 
         Optional<SmartNode> smartNodeOptional = smartNodeRepository.findByName(name);
-        List<SmartNodeDto> smartNodeDtoList = new ArrayList<>();
+        List<SmartNode> smartNodeList = new ArrayList<>();
 
         if(!smartNodeOptional.isPresent()) {
 
@@ -122,36 +114,27 @@ public class SmartNodeService {
         }
 
         smartNodeOptional.ifPresent(smartNode ->
-                smartNodeDtoList.add(modelMapper.map(smartNode,SmartNodeDto.class))
+                smartNodeList.add(modelMapper.map(smartNode,SmartNode.class))
 
         );
 
-        return smartNodeDtoList.get(0);
+        return smartNodeList.get(0);
 
     }
 
-    public SmartNodeDto getSmartNodeByLocation(LocationDto locationDto){
+    public SmartNode getSmartNodeByLocation(Location location){
 
-        Location location = modelMapper.map(locationDto, Location.class);
+
         SmartNode smartNode = smartNodeRepository.findByLocation(location);
 
-        return modelMapper.map(smartNode, SmartNodeDto.class);
+        return modelMapper.map(smartNode, SmartNode.class);
 
 
     }
 
-    public List<SmartNodeDto> getSmartNodeBySmartCluster(SmartClusterDto smartClusterDto) {
+    public List<SmartNode> getSmartNodeBySmartCluster(SmartCluster smartCluster) {
 
-        SmartCluster smartCluster = modelMapper.map(smartClusterDto, SmartCluster.class);
-
-        List<SmartNode> smartNodes = smartNodeRepository.findBySmartCluster(smartCluster);
-
-        List<SmartNodeDto> smartNodeDtoList = new ArrayList<>();
-        smartNodes.forEach(smartNode ->
-            smartNodeDtoList.add(modelMapper.map(smartNode, SmartNodeDto.class))
-        );
-
-        return smartNodeDtoList;
+        return smartNodeRepository.findBySmartCluster(smartCluster);
 
     }
 
@@ -169,9 +152,7 @@ public class SmartNodeService {
 
     }
 
-    public ResponseEntity<String> deleteSmartNodeBySmartCluster(SmartClusterDto smartClusterDto){
-
-        SmartCluster smartCluster = modelMapper.map(smartClusterDto, SmartCluster.class);
+    public ResponseEntity<String> deleteSmartNodeBySmartCluster(SmartCluster smartCluster){
 
         smartNodeRepository.deleteBySmartCluster(smartCluster);
         return ResponseEntity.ok("Smart Node Successfully Deleted");

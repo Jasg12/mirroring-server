@@ -3,7 +3,6 @@ package com.sjsu.cmpe.sstreet.mirroringserver.model;
 import javax.persistence.*;
 import java.net.URL;
 import java.util.Date;
-import java.util.Set;
 
 @Entity
 @Table(name = "smart_cluster")
@@ -23,27 +22,20 @@ public class SmartCluster {
 
     private URL url;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="location_idlocation", unique= true, nullable=true, insertable=true, updatable=true)
     private Location location;
 
-    @OneToMany(mappedBy = "smartCluster", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<SmartNode> smartNodeSet;
-
-    public SmartCluster(
-        String name,
-        String model,
-        String make,
-        Date installationDate,
-        Location location
-    ) {
-
+    public SmartCluster(String name, String model, String make, Date installationDate, URL url, Location location) {
+        this.idSmartCluster = idSmartCluster;
         this.name = name;
         this.model = model;
         this.make = make;
         this.installationDate = installationDate;
+        this.url = url;
         this.location = location;
     }
+
 
     public SmartCluster() {
 
@@ -109,15 +101,6 @@ public class SmartCluster {
         this.location = location;
     }
 
-    public Set<SmartNode> getSmartNodeSet() {
-
-        return smartNodeSet;
-    }
-
-    public void setSmartNodeSet(Set<SmartNode> smartNodeSet) {
-
-        this.smartNodeSet = smartNodeSet;
-    }
 
     public URL getUrl() {
 

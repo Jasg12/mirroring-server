@@ -1,9 +1,8 @@
 package com.sjsu.cmpe.sstreet.mirroringserver.controller;
 
-import com.sjsu.cmpe.sstreet.mirroringserver.data_transfer.LocationDto;
-import com.sjsu.cmpe.sstreet.mirroringserver.data_transfer.SmartClusterDto;
-import com.sjsu.cmpe.sstreet.mirroringserver.data_transfer.SmartNodeDto;
-import com.sjsu.cmpe.sstreet.mirroringserver.data_transfer.SmartNodeUpdateDto;
+import com.sjsu.cmpe.sstreet.mirroringserver.model.Location;
+import com.sjsu.cmpe.sstreet.mirroringserver.model.SmartCluster;
+import com.sjsu.cmpe.sstreet.mirroringserver.model.SmartNode;
 
 import com.sjsu.cmpe.sstreet.mirroringserver.service.SmartNodeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,45 +24,45 @@ public class SmartNodeController {
 
 
     @RequestMapping(method = RequestMethod.POST, value = "/create")
-    public @ResponseBody ResponseEntity<String> createSmartNode(@RequestBody SmartNodeDto smartNodeDto){
+    public @ResponseBody ResponseEntity<String> createSmartNode(@RequestBody SmartNode smartNode){
 
-        return smartNodeService.createSmartNode(smartNodeDto);
+        return smartNodeService.createSmartNode(smartNode);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/update")
-    public @ResponseBody ResponseEntity<String> updateSmartNode(@RequestBody SmartNodeUpdateDto smartNodeUpdateDto){
+    public @ResponseBody ResponseEntity<String> updateSmartNode(@RequestBody SmartNode smartNode){
 
-        return smartNodeService.updateSmartNode(smartNodeUpdateDto);
+        return smartNodeService.updateSmartNode(smartNode);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/get/all")
-    public @ResponseBody List<SmartNodeDto> getAllSmartNode(){
+    public @ResponseBody List<SmartNode> getAllSmartNode(){
 
         return smartNodeService.getAllSmartNodes();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/get/byId/{idSmartNode}")
-    public @ResponseBody SmartNodeDto getSmartNodeById(@PathVariable(value = "idSmartNode") Integer idSmartNode){
+    public @ResponseBody SmartNode getSmartNodeById(@PathVariable(value = "idSmartNode") Integer idSmartNode){
 
         return smartNodeService.getSmartNodeById(idSmartNode);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/get/byLocation")
-    public @ResponseBody SmartNodeDto getSmartNodeByLocation(@RequestBody LocationDto locationDto){
+    public @ResponseBody SmartNode getSmartNodeByLocation(@RequestBody Location location){
 
-        return smartNodeService.getSmartNodeByLocation(locationDto);
+        return smartNodeService.getSmartNodeByLocation(location);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/get/byName/{name}")
-    public @ResponseBody SmartNodeDto getSmartNodeByName(@PathVariable(value = "name") String name){
+    public @ResponseBody SmartNode getSmartNodeByName(@PathVariable(value = "name") String name){
 
         return smartNodeService.getSmartNodeByName(name);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/get/bySmartCluster")
-    public @ResponseBody List<SmartNodeDto> getSmartNodeBySmartCluster(@RequestBody SmartClusterDto smartClusterDto){
+    public @ResponseBody List<SmartNode> getSmartNodeBySmartCluster(@RequestBody SmartCluster smartCluster){
 
-        return smartNodeService.getSmartNodeBySmartCluster(smartClusterDto);
+        return smartNodeService.getSmartNodeBySmartCluster(smartCluster);
     }
 
 
@@ -80,9 +79,9 @@ public class SmartNodeController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/delete/bySmartCluster")
-    public @ResponseBody ResponseEntity<String> deleteSmartNodeBySmartCluster(@RequestBody SmartClusterDto smartClusterDto){
+    public @ResponseBody ResponseEntity<String> deleteSmartNodeBySmartCluster(@RequestBody SmartCluster smartCluster){
 
-        return smartNodeService.deleteSmartNodeBySmartCluster(smartClusterDto);
+        return smartNodeService.deleteSmartNodeBySmartCluster(smartCluster);
     }
 
 
