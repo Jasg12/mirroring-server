@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class LiveDataService {
 
-    private final String CLUSTER_CONNECTIVITY_API = "/cluster/connectivity";
+    private final String CLUSTER_CONNECTIVITY_API = "/cluster/status";
 
     private RestTemplate restTemplate;
 
