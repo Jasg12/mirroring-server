@@ -65,13 +65,13 @@ public class SensorController {
         return sensorService.deleteSensorById(idSensor);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/delete/bySmartCluster")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/delete/by/SmartNode")
     public @ResponseBody ResponseEntity<String> deleteSensorBySmartNode(@RequestBody SmartNode smartNode){
 
         return sensorService.deleteSensorBySmartNode(smartNode);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/delete/bySmartCluster")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/delete/by/SmartCluster")
     public @ResponseBody ResponseEntity<String> deleteSensorBySmartCluster(@RequestBody SmartCluster smartCluster){
 
         return sensorService.deleteSensorBySmartCluster(smartCluster);

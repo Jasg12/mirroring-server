@@ -111,4 +111,21 @@ public class SmartCluster {
 
         this.url = url;
     }
+
+    @Override
+    public String toString(){
+        StringBuffer sb = new StringBuffer();
+        sb
+            .append("\n")
+            .append("{" + "\n")
+            .append("    idSmartCluster:" + idSmartCluster + "\n")
+            .append("    name:" + name + "\n")
+            .append("    model:" + model + "\n")
+            .append("    make:" + make + "\n")
+            .append("    installationDate:" + installationDate + "\n")
+            .append("    url:" + url + "\n")
+            .append("}" + "\n");
+
+        return sb.toString();
+    }
 }

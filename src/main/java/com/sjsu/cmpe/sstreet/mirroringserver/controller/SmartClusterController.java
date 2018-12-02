@@ -4,6 +4,7 @@ import com.sjsu.cmpe.sstreet.mirroringserver.model.Location;
 import com.sjsu.cmpe.sstreet.mirroringserver.model.SmartCluster;
 import com.sjsu.cmpe.sstreet.mirroringserver.model.SmartCluster;
 import com.sjsu.cmpe.sstreet.mirroringserver.service.SmartClusterService;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,16 +16,19 @@ import java.util.List;
 public class SmartClusterController {
 
     private final SmartClusterService smartClusterService;
+    private Logger log;
 
     @Autowired
-    public SmartClusterController(SmartClusterService smartClusterService) {
+    public SmartClusterController(SmartClusterService smartClusterService, Logger log) {
+
         this.smartClusterService = smartClusterService;
+        this.log = log;
     }
 
+    @RequestMapping(method = RequestMethod.POST, value = "/create", produces = "application/json")
+    public SmartCluster createSmartCluster(@RequestBody SmartCluster smartCluster){
 
-    @RequestMapping(method = RequestMethod.POST, value = "/create")
-    public @ResponseBody ResponseEntity<String> createSmartCluster(@RequestBody SmartCluster smartCluster){
-
+        log.info("Getting request to create cluster:{}", smartCluster);
         return smartClusterService.createSmartCluster(smartCluster);
     }
 

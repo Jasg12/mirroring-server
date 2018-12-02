@@ -3,8 +3,10 @@ package com.sjsu.cmpe.sstreet.mirroringserver.service;
 
 import com.sjsu.cmpe.sstreet.mirroringserver.model.Location;
 import com.sjsu.cmpe.sstreet.mirroringserver.model.SmartCluster;
+import com.sjsu.cmpe.sstreet.mirroringserver.repository.mysql.LocationRepository;
 import com.sjsu.cmpe.sstreet.mirroringserver.repository.mysql.SmartClusterRepository;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,29 +20,34 @@ import java.util.Optional;
 public class SmartClusterService {
 
     private SmartClusterRepository smartClusterRepository;
+    private LocationRepository locationRepository;
+    private Logger log;
 
 
     private ModelMapper modelMapper;
 
+    public SmartClusterService(
+        SmartClusterRepository smartClusterRepository,
+        LocationRepository locationRepository,
+        Logger log
+    ) {
 
-    @Autowired
-    public SmartClusterService(SmartClusterRepository smartClusterRepository) {
         this.smartClusterRepository = smartClusterRepository;
-        this.modelMapper = new ModelMapper();
+        this.locationRepository = locationRepository;
+        this.log = log;
     }
 
-    public ResponseEntity<String> createSmartCluster(SmartCluster smartCluster) {
+    public SmartCluster createSmartCluster(SmartCluster smartCluster) {
 
-        SmartCluster savedSmartCluster = smartClusterRepository.save(smartCluster);
-
-        if(null != savedSmartCluster){
-
-            return ResponseEntity.ok("Smart Cluster Created with ID: "+savedSmartCluster.getIdSmartCluster());
-        }else{
-
-            return new ResponseEntity<>("A Smart Cluster at requested location already exists", HttpStatus.BAD_REQUEST);
+        Location location = smartCluster.getLocation();
+        if (location != null){
+            location = locationRepository.save(location);
         }
+        smartCluster.setLocation(location);
+        SmartCluster savedSmartCluster = smartClusterRepository.save(smartCluster);
+        log.info("New Cluster have created cluster:{}", savedSmartCluster);
 
+        return savedSmartCluster;
     }
 
     public ResponseEntity<String> updateSmartCluster(SmartCluster smartCluster){
