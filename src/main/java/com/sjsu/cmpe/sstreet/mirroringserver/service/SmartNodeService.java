@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ import java.util.Optional;
 public class SmartNodeService {
 
     private final String NODES_UNREGISTERED_API = "/smart_node/nodes/unregistered";
+    private final String NODE_REGISTERED_EVENT_API = "/smart_node/node/registered";
 
     @Value(value = "${cluster.device.url}")
     private String clusterURL;
@@ -178,5 +180,12 @@ public class SmartNodeService {
         List<SmartNode> nodes = response.getBody();
 
         return  nodes;
+    }
+
+    public void registeredNodeEvent(SmartNode smartNode){
+        log.info("Call the cluster device with registered node");
+        String url = clusterURL + NODE_REGISTERED_EVENT_API;
+        HttpEntity<SmartNode> httpEntity = new HttpEntity<>(smartNode);
+        restTemplate.put(url, httpEntity);
     }
 }

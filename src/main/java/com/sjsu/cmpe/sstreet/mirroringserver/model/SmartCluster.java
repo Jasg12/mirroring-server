@@ -20,14 +20,13 @@ public class SmartCluster {
 
     private Date installationDate;
 
-    private URL url;
+    private String url;
 
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="location_idlocation", unique= true, nullable=true, insertable=true, updatable=true)
     private Location location;
 
-    public SmartCluster(String name, String model, String make, Date installationDate, URL url, Location location) {
-        this.idSmartCluster = idSmartCluster;
+    public SmartCluster(String name, String model, String make, Date installationDate, String url, Location location) {
         this.name = name;
         this.model = model;
         this.make = make;
@@ -102,12 +101,12 @@ public class SmartCluster {
     }
 
 
-    public URL getUrl() {
+    public String getUrl() {
 
         return url;
     }
 
-    public void setUrl(URL url) {
+    public void setUrl(String url) {
 
         this.url = url;
     }

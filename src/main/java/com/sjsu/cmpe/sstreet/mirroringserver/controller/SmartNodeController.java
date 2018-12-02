@@ -5,6 +5,7 @@ import com.sjsu.cmpe.sstreet.mirroringserver.model.SmartCluster;
 import com.sjsu.cmpe.sstreet.mirroringserver.model.SmartNode;
 
 import com.sjsu.cmpe.sstreet.mirroringserver.service.SmartNodeService;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +17,12 @@ import java.util.List;
 public class SmartNodeController {
 
     private final SmartNodeService smartNodeService;
+    private Logger log;
 
     @Autowired
-    public SmartNodeController(SmartNodeService smartNodeService) {
+    public SmartNodeController(SmartNodeService smartNodeService, Logger log) {
         this.smartNodeService = smartNodeService;
+        this.log = log;
     }
 
 
@@ -88,6 +91,12 @@ public class SmartNodeController {
     public List<SmartNode> getUnregisteredNodes(){
 
         return smartNodeService.getUnregisteredNodes();
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/node/registered")
+    public void registeredNodeEvent(@RequestBody SmartNode smartNode){
+        log.info("Getting node registered event node:{}", smartNode);
+        smartNodeService.registeredNodeEvent(smartNode);
     }
 
 }

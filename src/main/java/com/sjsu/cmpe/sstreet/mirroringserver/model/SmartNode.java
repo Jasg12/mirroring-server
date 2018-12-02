@@ -2,6 +2,7 @@ package com.sjsu.cmpe.sstreet.mirroringserver.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "smart_node")
@@ -26,6 +27,9 @@ public class SmartNode {
     @ManyToOne
     @JoinColumn(name = "smart_cluster_idSmartCluster")
     private SmartCluster smartCluster;
+
+    @Transient
+    private List<Sensor> sensors;
 
     public SmartNode(
         String name,
@@ -125,5 +129,34 @@ public class SmartNode {
     public void setSmartCluster(SmartCluster smartCluster) {
 
         this.smartCluster = smartCluster;
+    }
+
+    public List<Sensor> getSensors() {
+
+        return sensors;
+    }
+
+    public void setSensors(List<Sensor> sensors) {
+
+        this.sensors = sensors;
+    }
+
+    @Override
+    public String toString(){
+        StringBuffer sb = new StringBuffer();
+        sb
+            .append("\n")
+            .append("{" + "\n")
+            .append("    idSmartNode:" + idSmartNode + "\n")
+            .append("    name:" + name + "\n")
+            .append("    model:" + model + "\n")
+            .append("    make:" + make + "\n")
+            .append("    installationDate:" + installationDate + "\n")
+            .append("    locationId:" + (location != null?location.getIdLocation():"null") + "\n")
+            .append("    clusterId:" + (smartCluster != null?smartCluster.getIdSmartCluster():"null") + "\n")
+            .append("    sensors:" + (sensors != null?sensors.size():0) + "\n")
+            .append("}" + "\n");
+
+        return sb.toString();
     }
 }
