@@ -84,5 +84,10 @@ public class SmartNodeController {
         return smartNodeService.deleteSmartNodeBySmartCluster(smartCluster);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/nodes/unregistered", produces = "application/json")
+    public List<SmartNode> getUnregisteredNodes(){
+
+        return smartNodeService.getUnregisteredNodes();
+    }
 
 }

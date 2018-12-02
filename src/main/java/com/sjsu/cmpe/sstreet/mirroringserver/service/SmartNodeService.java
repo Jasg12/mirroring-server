@@ -6,10 +6,15 @@ import com.sjsu.cmpe.sstreet.mirroringserver.model.SmartCluster;
 import com.sjsu.cmpe.sstreet.mirroringserver.model.SmartNode;
 import com.sjsu.cmpe.sstreet.mirroringserver.repository.mysql.SmartNodeRepository;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,16 +23,23 @@ import java.util.Optional;
 @Service
 public class SmartNodeService {
 
+    private final String NODES_UNREGISTERED_API = "/smart_node/nodes/unregistered";
+
+    @Value(value = "${cluster.device.url}")
+    private String clusterURL;
+
+
     private SmartNodeRepository smartNodeRepository;
-
-
     private ModelMapper modelMapper;
-
+    private RestTemplate restTemplate;
+    private Logger log;
 
     @Autowired
-    public SmartNodeService(SmartNodeRepository smartNodeRepository) {
+    public SmartNodeService(SmartNodeRepository smartNodeRepository, RestTemplate restTemplate, Logger log) {
+
         this.smartNodeRepository = smartNodeRepository;
-        this.modelMapper = new ModelMapper();
+        this.restTemplate = restTemplate;
+        this.log = log;
     }
 
     public ResponseEntity<String> createSmartNode(SmartNode smartNode) {
@@ -159,6 +171,12 @@ public class SmartNodeService {
 
     }
 
+    public List<SmartNode> getUnregisteredNodes(){
 
+        String url = clusterURL + NODES_UNREGISTERED_API;
+        ResponseEntity<List<SmartNode>> response = restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<SmartNode>>(){});
+        List<SmartNode> nodes = response.getBody();
 
+        return  nodes;
+    }
 }
