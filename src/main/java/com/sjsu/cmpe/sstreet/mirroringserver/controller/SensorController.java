@@ -14,16 +14,22 @@ import java.util.List;
 public class SensorController {
 
     private final SensorService sensorService;
+    private SmartNodeService smartNodeService;
 
     @Autowired
-    public SensorController(SensorService sensorService) {
+    public SensorController(
+        SensorService sensorService,
+        SmartNodeService smartNodeService)
+    {
         this.sensorService = sensorService;
+        this.smartNodeService = smartNodeService;
     }
 
 
-    @RequestMapping(method = RequestMethod.POST, value = "/create")
-    public @ResponseBody
-    ResponseEntity<String> createSensor(@RequestBody Sensor sensor){
+    @RequestMapping(method = RequestMethod.POST, value = "/create", produces = "application/json")
+    public Sensor createSensor(@RequestBody Sensor sensor){
+        SmartNode node = smartNodeService.getSmartNodeById(sensor.getSmartNode().getIdSmartNode());
+        sensor.setSmartNode(node);
 
         return sensorService.createSensor(sensor);
     }

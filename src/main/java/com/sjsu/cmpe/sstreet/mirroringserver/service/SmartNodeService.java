@@ -87,17 +87,7 @@ public class SmartNodeService {
 
     public SmartNode getSmartNodeById(Integer id){
 
-        Optional<SmartNode> smartNodeOptional = smartNodeRepository.findById(id);
-        List<SmartNode> smartNode = new ArrayList<>();
-
-        if(!smartNodeOptional.isPresent()) {
-
-            return null;
-        }
-
-
-        return smartNode.get(0);
-
+       return smartNodeRepository.findById(id).get();
     }
 
     public SmartNode getSmartNodeByName(String name){

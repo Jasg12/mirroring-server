@@ -12,6 +12,9 @@ public class SmartNode {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer idSmartNode;
 
+    @Transient
+    private Integer internalId;
+
     private String name;
 
     private String model;
@@ -139,6 +142,16 @@ public class SmartNode {
     public void setSensors(List<Sensor> sensors) {
 
         this.sensors = sensors;
+    }
+
+    public Integer getInternalId() {
+
+        return internalId;
+    }
+
+    public void setInternalId(Integer internalId) {
+
+        this.internalId = internalId;
     }
 
     @Override

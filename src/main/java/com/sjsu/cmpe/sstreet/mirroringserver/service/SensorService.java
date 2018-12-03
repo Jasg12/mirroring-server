@@ -18,38 +18,32 @@ import java.util.*;
 public class SensorService {
 
     private SensorRepository sensorRepository;
-
     private SmartNodeRepository smartNodeRepository;
-
     private SensorStatusRepository sensorStatusRepository;
-
     private SensorStatusByTimestampRepository sensorStatusByTimestampRepository;
+    private LocationRepository locationRepository;
 
     @Autowired
-    public SensorService(SensorRepository sensorRepository,
-                         SmartNodeRepository smartNodeRepository,
-                         SensorStatusRepository sensorStatusRepository
-            , SensorStatusByTimestampRepository sensorStatusByTimestampRepository
-        ) {
+    public SensorService(
+        SensorRepository sensorRepository,
+        SmartNodeRepository smartNodeRepository,
+        SensorStatusRepository sensorStatusRepository,
+        SensorStatusByTimestampRepository sensorStatusByTimestampRepository,
+        LocationRepository locationRepository)
+    {
         this.sensorRepository = sensorRepository;
         this.smartNodeRepository = smartNodeRepository;
         this.sensorStatusRepository = sensorStatusRepository;
         this.sensorStatusByTimestampRepository = sensorStatusByTimestampRepository;
+        this.locationRepository = locationRepository;
     }
 
-    public ResponseEntity<String> createSensor(Sensor sensor) {
+    public Sensor createSensor(Sensor sensor) {
+        Location location = sensor.getLocation();
+        location = locationRepository.save(location);
+        sensor = sensorRepository.save(sensor);
 
-
-        Sensor savedSensor = sensorRepository.save(sensor);
-
-        if (null != savedSensor) {
-
-            return ResponseEntity.ok("Smart Node Created with ID: " + savedSensor.getIdSensor());
-        } else {
-
-            return new ResponseEntity<>("A Smart Node at requested location already exists", HttpStatus.BAD_REQUEST);
-        }
-
+        return sensor;
     }
 
     public ResponseEntity<String> updateSensor(Sensor sensor) {
