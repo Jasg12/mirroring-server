@@ -4,6 +4,7 @@ import com.sjsu.cmpe.sstreet.mirroringserver.model.Location;
 import com.sjsu.cmpe.sstreet.mirroringserver.model.SmartCluster;
 import com.sjsu.cmpe.sstreet.mirroringserver.model.SmartNode;
 
+import com.sjsu.cmpe.sstreet.mirroringserver.service.SmartClusterService;
 import com.sjsu.cmpe.sstreet.mirroringserver.service.SmartNodeService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,17 @@ public class SmartNodeController {
 
     private final SmartNodeService smartNodeService;
     private Logger log;
+    private SmartClusterService smartClusterService;
 
     @Autowired
-    public SmartNodeController(SmartNodeService smartNodeService, Logger log) {
+    public SmartNodeController(
+        SmartNodeService smartNodeService,
+        Logger log,
+        SmartClusterService smartClusterService)
+    {
         this.smartNodeService = smartNodeService;
         this.log = log;
+        this.smartClusterService = smartClusterService;
     }
 
 
@@ -32,8 +39,11 @@ public class SmartNodeController {
         return smartNodeService.createSmartNode(smartNode);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/update")
-    public @ResponseBody ResponseEntity<String> updateSmartNode(@RequestBody SmartNode smartNode){
+    @RequestMapping(method = RequestMethod.PUT, value = "/update", produces = "application/json")
+    public SmartNode updateSmartNode(@RequestBody SmartNode smartNode){
+
+        SmartCluster cluster = smartClusterService.getSmartClusterById(smartNode.getSmartCluster().getIdSmartCluster());
+        smartNode.setSmartCluster(cluster);
 
         return smartNodeService.updateSmartNode(smartNode);
     }

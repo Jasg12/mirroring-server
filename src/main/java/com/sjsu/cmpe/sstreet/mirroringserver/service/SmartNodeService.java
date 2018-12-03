@@ -4,6 +4,7 @@ package com.sjsu.cmpe.sstreet.mirroringserver.service;
 import com.sjsu.cmpe.sstreet.mirroringserver.model.Location;
 import com.sjsu.cmpe.sstreet.mirroringserver.model.SmartCluster;
 import com.sjsu.cmpe.sstreet.mirroringserver.model.SmartNode;
+import com.sjsu.cmpe.sstreet.mirroringserver.repository.mysql.LocationRepository;
 import com.sjsu.cmpe.sstreet.mirroringserver.repository.mysql.SmartNodeRepository;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -35,17 +36,22 @@ public class SmartNodeService {
     private ModelMapper modelMapper;
     private RestTemplate restTemplate;
     private Logger log;
+    private LocationRepository locationRepository;
 
     @Autowired
-    public SmartNodeService(SmartNodeRepository smartNodeRepository, RestTemplate restTemplate, Logger log) {
-
+    public SmartNodeService(
+        SmartNodeRepository smartNodeRepository,
+        RestTemplate restTemplate,
+        Logger log,
+        LocationRepository locationRepository)
+    {
         this.smartNodeRepository = smartNodeRepository;
         this.restTemplate = restTemplate;
         this.log = log;
+        this.locationRepository = locationRepository;
     }
 
     public ResponseEntity<String> createSmartNode(SmartNode smartNode) {
-
 
         SmartNode savedSmartNode = smartNodeRepository.save(smartNode);
 
@@ -56,37 +62,14 @@ public class SmartNodeService {
 
             return new ResponseEntity<>("A Smart Node at requested location already exists", HttpStatus.BAD_REQUEST);
         }
-
     }
 
-    public ResponseEntity<String> updateSmartNode(SmartNode smartNode){
+    public SmartNode updateSmartNode(SmartNode node){
 
+        Location location = node.getLocation();
+        location = locationRepository.save(location);
 
-
-        Optional<SmartNode> smartNodeResult = smartNodeRepository.findById(smartNode.getIdSmartNode());
-
-        smartNodeResult.ifPresent(result->{
-            smartNode.setName(result.getName());
-            smartNode.setMake(result.getMake());
-            smartNode.setModel(result.getModel());
-            smartNode.setInstallationDate(result.getInstallationDate());
-            smartNode.setSmartCluster(result.getSmartCluster());
-
-        });
-
-        if(smartNodeResult.isPresent()){
-
-            if(null != smartNodeRepository.save(smartNode)){
-                return ResponseEntity.ok("Smart Node updated");
-
-            }else{
-                return new ResponseEntity<>("Smart Node  Failed",HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-
-        }else{
-            return new ResponseEntity<>("Smart Node with ID: " + smartNode.getIdSmartNode()+" does not exist",HttpStatus.BAD_REQUEST);
-        }
-
+        return smartNodeRepository.save(node);
     }
 
     public List<SmartNode> getAllSmartNodes(){
