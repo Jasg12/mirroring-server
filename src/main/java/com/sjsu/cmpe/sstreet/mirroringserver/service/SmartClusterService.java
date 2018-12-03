@@ -50,32 +50,28 @@ public class SmartClusterService {
         return savedSmartCluster;
     }
 
-    public ResponseEntity<String> updateSmartCluster(SmartCluster smartCluster){
+    public SmartCluster updateSmartCluster(SmartCluster smartCluster){
 
+        SmartCluster currentCluster = smartClusterRepository.findById(smartCluster.getIdSmartCluster()).get();
+        currentCluster.setName(smartCluster.getName());
+        currentCluster.setModel(smartCluster.getModel());
+        currentCluster.setMake(smartCluster.getMake());
+        currentCluster.setUrl(smartCluster.getUrl());
+        currentCluster.setIdSmartCluster(smartCluster.getIdSmartCluster());
 
-        Optional<SmartCluster> smartClusterResult = smartClusterRepository.findById(smartCluster.getIdSmartCluster());
+        Location currentLocation = currentCluster.getLocation();
+        currentLocation.setIdLocation(smartCluster.getLocation().getIdLocation());
+        currentLocation.setState(smartCluster.getLocation().getState());
+        currentLocation.setCity(smartCluster.getLocation().getCity());
+        currentLocation.setStreet(smartCluster.getLocation().getStreet());
+        currentLocation.setLatitude(smartCluster.getLocation().getLatitude());
+        currentLocation.setLongitude(smartCluster.getLocation().getLongitude());
+        currentLocation.setZipCode(smartCluster.getLocation().getZipCode());
+        locationRepository.save(currentLocation);
+        currentCluster = smartClusterRepository.save(currentCluster);
+        log.info("Update cluster:{}", currentCluster);
 
-        smartClusterResult.ifPresent(result->{
-            smartCluster.setName(result.getName());
-            smartCluster.setMake(result.getMake());
-            smartCluster.setModel(result.getModel());
-            smartCluster.setInstallationDate(result.getInstallationDate());
-
-        });
-
-        if(smartClusterResult.isPresent()){
-
-            if(null != smartClusterRepository.save(smartCluster)){
-                return ResponseEntity.ok("Smart Cluster updated");
-
-            }else{
-                return new ResponseEntity<>("Smart Cluster  Failed",HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-
-        }else{
-            return new ResponseEntity<>("Smart Cluster with ID: " + smartCluster.getIdSmartCluster()+" does not exist",HttpStatus.BAD_REQUEST);
-        }
-
+        return currentCluster;
     }
 
     public List<SmartCluster> getAllSmartClusters(){
