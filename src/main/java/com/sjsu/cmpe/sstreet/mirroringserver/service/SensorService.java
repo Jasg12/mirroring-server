@@ -46,28 +46,12 @@ public class SensorService {
         return sensor;
     }
 
-    public ResponseEntity<String> updateSensor(Sensor sensor) {
+    public Sensor updateSensor(Sensor sensor) {
 
+        Location location = sensor.getLocation();
+        location = locationRepository.save(location);
 
-        Optional<Sensor> sensorResult = sensorRepository.findById(sensor.getIdSensor());
-
-        sensorResult.ifPresent(result ->
-            EntityUtils.setUnsetValues(sensor, result)
-        );
-
-        if (sensorResult.isPresent()) {
-
-            if (null != sensorRepository.save(sensor)) {
-                return ResponseEntity.ok("Smart Node updated");
-
-            } else {
-                return new ResponseEntity<>("Smart Node  Failed", HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-
-        } else {
-            return new ResponseEntity<>("Smart Node with ID: " + sensor.getIdSensor() + " does not exist", HttpStatus.BAD_REQUEST);
-        }
-
+        return sensorRepository.save(sensor);
     }
 
     public List<Sensor> getAllSensors() {
@@ -155,6 +139,11 @@ public class SensorService {
         //return sensorStatusByTimestampRepository.findByTimestampBeforeAndTimestampAfter((long)20181130,(long)20181126);
         return sensorStatusRepository.findAll();
 
+    }
+
+    public List<Sensor> getSensorsByClusterSerialNumber(String serialNumber){
+
+        return sensorRepository.findAllBySmartNode_SmartCluster_SerialNumber(serialNumber);
     }
 
 }

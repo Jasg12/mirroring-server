@@ -1,37 +1,40 @@
 package com.sjsu.cmpe.sstreet.mirroringserver.model;
 
-import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
-import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
-import org.springframework.data.cassandra.core.mapping.Table;
+import com.sjsu.cmpe.sstreet.mirroringserver.model.SensorType;
 
-abstract public class SensorData {
+public class SensorData {
 
-    @PrimaryKeyColumn(ordinal = 0, type = PrimaryKeyType.PARTITIONED)
     private Integer idSmartCluster;
 
-    @PrimaryKeyColumn(ordinal = 1, type = PrimaryKeyType.CLUSTERED)
     private Integer idSmartNode;
+
+    private Integer idSensor;
 
     private SensorType type;
 
-    @PrimaryKeyColumn(ordinal = 2, type = PrimaryKeyType.CLUSTERED)
     private Long timestamp;
 
-    @PrimaryKeyColumn(ordinal = 3, type = PrimaryKeyType.CLUSTERED)
-    private Integer idSensor;
+    private SensorValue value;
+
+    public SensorData(
+        Integer idSmartCluster,
+        Integer idSmartNode,
+        SensorType type,
+        Long timestamp,
+        Integer idSensor,
+        SensorValue value
+    ) {
+
+        this.idSmartCluster = idSmartCluster;
+        this.idSmartNode = idSmartNode;
+        this.type = type;
+        this.timestamp = timestamp;
+        this.idSensor = idSensor;
+        this.value = value;
+    }
 
     public SensorData() {
 
-    }
-
-    public Integer getIdSensor() {
-
-        return idSensor;
-    }
-
-    public void setIdSensor(Integer idSensor) {
-
-        this.idSensor = idSensor;
     }
 
     public Integer getIdSmartCluster() {
@@ -72,5 +75,25 @@ abstract public class SensorData {
     public void setTimestamp(Long timestamp) {
 
         this.timestamp = timestamp;
+    }
+
+    public Integer getIdSensor() {
+
+        return idSensor;
+    }
+
+    public void setIdSensor(Integer idSensor) {
+
+        this.idSensor = idSensor;
+    }
+
+    public SensorValue getValue() {
+
+        return value;
+    }
+
+    public void setValue(SensorValue value) {
+
+        this.value = value;
     }
 }

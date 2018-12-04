@@ -10,9 +10,9 @@ public class Location {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer IdLocation;
 
-    private Long longitude;
+    private double longitude;
 
-    private Long latitude;
+    private double latitude;
 
     private String state;
 
@@ -26,7 +26,7 @@ public class Location {
 
     }
 
-    public Location(Integer idLocation, Long longitude, Long latitude, String state, String city, String street, Integer zipCode) {
+    public Location(Integer idLocation, double longitude, double latitude, String state, String city, String street, Integer zipCode) {
 
         IdLocation = idLocation;
         this.longitude = longitude;
@@ -37,7 +37,7 @@ public class Location {
         this.zipCode = zipCode;
     }
 
-    public Location(Long longitude, Long latitude, String state, String city, String street, Integer zipCode) {
+    public Location(double longitude, double latitude, String state, String city, String street, Integer zipCode) {
 
         this.longitude = longitude;
         this.latitude = latitude;
@@ -57,22 +57,22 @@ public class Location {
         IdLocation = idLocation;
     }
 
-    public Long getLongitude() {
+    public double getLongitude() {
 
         return longitude;
     }
 
-    public void setLongitude(Long longitude) {
+    public void setLongitude(double longitude) {
 
         this.longitude = longitude;
     }
 
-    public Long getLatitude() {
+    public double getLatitude() {
 
         return latitude;
     }
 
-    public void setLatitude(Long latitude) {
+    public void setLatitude(double latitude) {
 
         this.latitude = latitude;
     }

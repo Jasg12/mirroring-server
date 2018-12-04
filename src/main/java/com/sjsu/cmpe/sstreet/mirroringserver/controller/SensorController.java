@@ -34,8 +34,8 @@ public class SensorController {
         return sensorService.createSensor(sensor);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/update")
-    public @ResponseBody ResponseEntity<String> updateSensor(@RequestBody Sensor sensor){
+    @RequestMapping(method = RequestMethod.PUT, value = "/update", produces = "application/json")
+    public Sensor updateSensor(@RequestBody Sensor sensor){
 
         return sensorService.updateSensor(sensor);
     }

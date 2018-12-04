@@ -35,7 +35,7 @@ public class Sensor {
     @JoinColumn(name="location_idlocation", unique= true, nullable=true, insertable=true, updatable=true)
     private Location location;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "smart_node_idSmartNode")
     private SmartNode smartNode;
 

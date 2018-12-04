@@ -12,6 +12,8 @@ public class SmartCluster {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer idSmartCluster;
 
+    private String serialNumber;
+
     private String name;
 
     private String model;
@@ -111,6 +113,16 @@ public class SmartCluster {
         this.url = url;
     }
 
+    public String getSerialNumber() {
+
+        return serialNumber;
+    }
+
+    public void setSerialNumber(String serialNumber) {
+
+        this.serialNumber = serialNumber;
+    }
+
     @Override
     public String toString(){
         StringBuffer sb = new StringBuffer();
@@ -118,6 +130,7 @@ public class SmartCluster {
             .append("\n")
             .append("{" + "\n")
             .append("    idSmartCluster:" + idSmartCluster + "\n")
+            .append("    serialNumber:" + serialNumber + "\n")
             .append("    name:" + name + "\n")
             .append("    model:" + model + "\n")
             .append("    make:" + make + "\n")
