@@ -34,7 +34,7 @@ public class PullSensorsDataTask {
         this.liveDataService = liveDataService;
     }
 
-    @Scheduled(fixedRate = 20000)
+    @Scheduled(fixedRate = 8000)
     public void pullSensorsData(){
         List<Sensor> sensors = sensorService.getSensorsByClusterSerialNumber(clusterSerialNumber);
         for (Sensor sensor:sensors){
